@@ -1,0 +1,39 @@
+node
+{
+
+def mavenHome = tool name: "maven3.8.5" --> we this variable to get the maven version
+
+properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: 
+'5', daysToKeepStr: '', numToKeepStr: '5')), [$class: 'JobLocalConfiguration', 
+changeReasonComment: ''], pipelineTriggers([pollSCM('* * * * *')])])
+
+ echo "The job name is: ${env.JOB_NAME}"
+ echo "The node name is: ${env.NODE_NAME}"
+  echo "The workspace is: ${env.WORKSPACE}"
+ echo "The node label is: ${env.NODE_LABELS}"
+ echo "The build number is: ${env.BUILD_NUMBER}"
+stage('CheckoutCode'){
+git branch: 'development', credentialsId: '3173b20d-8749-4369-adde-b1137512f3cf', 
+url: 'https://github.com/michaelenset/maven-web-application.git'
+}
+
+stage('Build'){
+sh "${mavenHome}/bin/mvn clean package"
+}
+  /*
+stage('Execute SonarQube Report') {
+sh "${mavenHome}/bin/mvn sonar:sonar"
+}
+
+stage('UploadArtifactsIntoNexus') {
+sh "${mavenHome}/bin/mvn deploy"
+}
+
+stage('DeployAppIntoTomcatServer') {
+sshagent(['dd5a64bf-67fe-41b5-84ea-0707fd7d35b5']) {
+   sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@3.17.203.201:/opt/apache-tomcat-9.0.65/webapps/"
+
+}
+}
+  */
+}

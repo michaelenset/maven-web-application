@@ -50,7 +50,7 @@ sshagent(['dd5a64bf-67fe-41b5-84ea-0707fd7d35b5']) {
  }
 } //Node closing
 
-def slack notifications(String buildStatus = 'STARTED') {
+def slacknotifications(String buildStatus = 'STARTED') {
   // build status of null means success
   buildStatus =  buildStatus ?: 'SUCCESS'
 

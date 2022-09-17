@@ -14,6 +14,7 @@ changeReasonComment: ''], pipelineTriggers([pollSCM('* * * * *')])])
  echo "The build number is: ${env.BUILD_NUMBER}"
 
  try{
+slacknotifications("STARTED")
 
 stage('CheckoutCode'){
 git branch: 'development', credentialsId: '3173b20d-8749-4369-adde-b1137512f3cf', 
